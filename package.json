@@ -1,0 +1,15 @@
+{
+  "name": "pinakajs",
+  "version": "1.0.2",
+  "description": "Javascript Library For AngularJs, ReactJs, NodeJs",
+  "main": "pinaka_1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pinaka",
+    "pinakajs"
+  ],
+  "author": "Finelogics Consulting",
+  "license": "ISC"
+}
