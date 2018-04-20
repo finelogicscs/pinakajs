@@ -15,10 +15,261 @@ PinakaJs is a Javascript Library with expressive, elegant syntax. We believe dev
 
 PinakaJs is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
 
-## Learning PinakaJs
+## Installation and Usage
 
-PinakaJs has the most extensive and thorough documentation and video* tutorial library of any modern App/Web application framework. The [PinakaJs documentation](http://pinakajs.lokhittrust.in) is thorough, complete, and makes it a breeze to get started learning the framework.
+In browser:
 
+```
+ <script src="https://cdn.jsdelivr.net/npm/pinakajs@1.0.2/pinaka.js"></script>
+```
+Using npm:
+``` 
+npm install pinakajs 
+``` 
+## Documentation
+
+- Ajax
+- UI
+### Ajax
+
+- GET
+- POST
+- PUT 
+- DELETE
+
+#### GET
+1. GET request for within Application request
+```
+function FunctionName() {
+            // api_root is your trailing route 
+            pnkHttp.Get(pnk.RootController + "api_root").AttachLoader(false, "divId", 'small').Do().then(function (response) {
+                // Handle response                
+            });
+
+        }
+
+```
+
+2. GET request for within Application request for getting components as HTML
+```
+function FunctionName() {
+            // api_root is your trailing route 
+            pnkHttp.Get(pnk.RootController + "api_root").As("html").AttachLoader(false, "divId", 'small').Do().then(function (response) {
+                // Handle response      
+                if (response !== null) {
+                    $('#divID').html(response).show();
+                    /* or show in modal */
+                    $('#divModalBody').html(response);
+                    $('#divModal').modal('show');
+                }else {
+                    // else code
+                }        
+            });
+
+        }
+
+```
+
+3. GET Request for third party api's or with CORS
+```
+pnkHttp.GetCORS("third party api",CallbackFunction);
+```
+
+#### POST
+Note: AddRequiredParams('FormId') it is compulsory to send form data.
+1. Post Request with data Validation
+```
+function AddNew() {
+        /* Validated is used to validate form contents like Email, number etc. */
+        if(Validated("formID")) {
+            pnkHttp.Post(pnk.RootController + 'api_root').AddRequiredParams("formID").AttachLoader(true, "formID", 'small').Do().then(function (response) {
+                // handle response
+            });
+        }else(
+            // else code
+        )
+    }
+```
+
+2. Post Request without dat validation
+```
+function AddNew() {  
+    pnkHttp.Post(pnk.RootController + 'api_root').AddRequiredParams("formID").AttachLoader(true, "formID", 'small').Do().then(function (response) {
+        // handle response
+    });
+      
+}
+```
+#### PUT
+Note: AddRequiredParams('FormId') it is compulsory to send form data.
+1. Put Request with data Validation
+```
+function Modify() {
+        /* Validated is used to validate form contents like Email, number etc. */
+        if(Validated("formID")) {
+            pnkHttp.Put(pnk.RootController + 'api_root').AddRequiredParams("formID").AttachLoader(true, "formID", 'small').Do().then(function (response) {
+                // handle response
+            });
+        }else(
+            // else code
+        )
+    }
+```
+
+2. Put Request without data validation
+```
+function Modify() {  
+    pnkHttp.Put(pnk.RootController + 'api_root').AddRequiredParams("formID").AttachLoader(true, "formID", 'small').Do().then(function (response) {
+        // handle response
+    });
+      
+}
+```
+
+### Delete
+```
+function Delete(id) {
+        if (confirm("Are You Sure?") == true) {
+            pnkHttp.Delete(pnk.RootController + "api_root" + id).AttachLoader(true, "divId",'small').Do().then(function (response) {
+                if (response.PinakaResponse.ServerStatus.value == "SUCCESS") {
+                    // handle response
+                    pnk.Framework.AlertModal("INFO", "Deleted"); // framework's modal  
+                }
+            });
+        }
+    }
+```
+#### Note: Adding additional Header in request for secure connection
+- AddHeader() : Can be added in all XHR requests. 
+```
+function Secure equest() {
+    pnkHttp.Get(pnk.RootController + 'api_root').AddHeader('XAUTHTOKEN', 'your token')).AttachLoader(false, "formId", 'small').Do().then(function (response) {
+        // handle response
+    });
+}
+
+```
+### UI
+
+1. Form
+2. Alert Modals
+
+#### Working with Forms
+
+A form Component can be openend in two modes 
+- Entry 
+- Edit
+
+1. Entry mode : 
+```
+<div id="divEntryEdit" data-nw>
+    <form class="form-horizontal" id="frmEntryEdit" data-om-componenttype="form">
+        <div data-om-viewdatamembers="name,number,email,password">
+            <div class="form-group">
+                <label for="txtName" class="col-sm-4 control-label"> Name :</label>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <input class="form-control" name="txtName" id="txtName" placeholder="Enter Name" type="text" pnkvalidate="forceentry"
+                               displayfieldname="Name" data-om-input-value="0"/>
+                        <span class="input-group-addon"><i class="fa fa-person"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="txtNumber" class="col-sm-4 control-label"> Number :</label>
+                <div class="col-sm-6">
+                    <div class="input-group ">
+                        <input class="form-control" name="txtNumber" id="txtNumber" value=""
+                               placeholder="Enter Number" type="text" pnkvalidate="forcenumber"
+                               displayfieldname="Number" data-om-input-value="1"/>
+                        <span class="input-group-addon"><i class="fa fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="txtEmail" class="col-sm-4 control-label"> Number :</label>
+                <div class="col-sm-6">
+                    <div class="input-group ">
+                        <input class="form-control" name="txtEmail" id="txtEmail" value=""
+                               placeholder="Enter Email" type="text" pnkvalidate="forceemail"
+                               displayfieldname="Email" data-om-input-value="2"/>
+                        <span class="input-group-addon"><i class="fa fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="txtPassword" class="col-sm-4 control-label"> Password :</label>
+                <div class="col-sm-6">
+                    <div class="input-group ">
+                        <input class="form-control" name="txtPassword" id="txtPassword" value=""
+                               placeholder="Enter Password" type="text" pnkvalidate="forcepassword" pnk=""
+                               displayfieldname="Password" />
+                        <span class="input-group-addon"><i class="fa fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="btnSubmit" class="col-sm-3 control-label"></label>
+                <div class="col-sm-5">
+                    <button type="button" class="btn btn-info" id="btnSubmit" name="btnSubmit" onclick="Addnew();" >Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+``` 
+
+###Setting things for diffrent modes
+
+```
+$(document).ready(function () {
+
+        if (window.location.href.split('/').pop() === 'entry') {
+            formUser = new pnk.EditEntryView("entry");
+            formUser.ContainerId = "divEntryEdit";
+            formUser.Bind("");
+            $('#btnSubmit').attr('onclick','AddNew()');
+        }else if(window.location.href.split('/').pop() === 'edit') {
+                pnkHttp.Get(pnk.RootController + "api_root").AttachLoader(false, "divEntryEdit", 'small').Do().then(function (response) {
+                    formUser = new pnk.EditEntryView("edit");
+                    formUser.ContainerId = "divEntryEdit";
+                    formUser.Bind(response.data_set);
+                    $('#btnSubmit').attr('onclick','Modify()');
+                });
+        }
+    });
+
+
+```
+2. Addnew() method for sending data to server 
+```
+function AddNew() {
+        /* Validated is used to validate form contents like Email, number etc. */
+        if(Validated("frmEntryEdit")) {
+            pnkHttp.Post(pnk.RootController + 'addnewuser').AddRequiredParams("frmEntryEdit").AttachLoader(true, "formID", 'small').Do().then(function (response) {
+                // handle response
+                pnk.Framework.AlertModal("INFO", "Successfully Added"); // framework's modal
+            });
+        }else(
+            // else code
+        )
+    }
+```
+3. Modify() method for modifiying data of user 
+```
+function Modify() {
+        /* Validated is used to validate form contents like Email, number etc. */
+        if(Validated("frmEntryEdit")) {
+            pnkHttp.Put(pnk.RootController + 'modifyuser').AddRequiredParams("frmEntryEdit").AttachLoader(true, "frmEntryEdit", 'small').Do().then(function (response) {
+                // handle response
+                pnk.Framework.AlertModal("INFO", "Successfully Modified details"); // framework's modal
+            });
+        }else(
+            // else code
+        )
+    }
+```
 
 ## PinakaJs Sponsors
 
