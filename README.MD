@@ -239,10 +239,7 @@ $(document).ready(function () {
 function AddNew() {
         /* Validated is used to validate form contents like Email, number etc. */
         if(Validated("frmEntryEdit")) {
-            pnkHttp.Post(pnk.RootController + 'addnewuser').AddRequiredParams("frmEntryEdit").AttachLoader(false, "formID", 'small').Do().then(function (response) {
-                // handle response
-                pnk.Framework.AlertModal("INFO", "Successfully Added"); // framework's modal
-            });
+            alert("Successfully Validated");
         }else{
             // else code
         }
