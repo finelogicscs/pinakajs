@@ -85,9 +85,9 @@ function AddNew() {
             pnkHttp.Post(pnk.RootController + 'api_root').AddRequiredParams("formID").AttachLoader(true, "formID", 'small').Do().then(function (response) {
                 // handle response
             });
-        }else(
+        }else{
             // else code
-        )
+        }
     }
 ```
 
@@ -110,9 +110,9 @@ function Modify() {
             pnkHttp.Put(pnk.RootController + 'api_root').AddRequiredParams("formID").AttachLoader(true, "formID", 'small').Do().then(function (response) {
                 // handle response
             });
-        }else(
+        }else{
             // else code
-        )
+        }
     }
 ```
 
@@ -159,63 +159,55 @@ function Secure equest() {
 A form Component can be openend in two modes 
 - Entry 
 - Edit
+- Form Validation on code pen : https://codepen.io/finelogicscs/pen/jxPgbZ?editors=1010
 
 1. Entry mode : 
 ```
-<div id="divEntryEdit" data-nw>
-    <form class="form-horizontal" id="frmEntryEdit" data-om-componenttype="form">
-        <div data-om-viewdatamembers="name,number,email,password">
+<div class="container">
+  <div id="divEntryEdit" data-nw>
+    <form class="form-horizontal" id="frmEntryEdit" data-pnk-componenttype="form">
+        <div data-pnk-viewdatamembers="name,number,email,password">
             <div class="form-group">
                 <label for="txtName" class="col-sm-4 control-label"> Name :</label>
-                <div class="col-sm-6">
-                    <div class="input-group">
-                        <input class="form-control" name="txtName" id="txtName" placeholder="Enter Name" type="text" pnkvalidate="forceentry"
-                               displayfieldname="Name" data-om-input-value="0"/>
-                        <span class="input-group-addon"><i class="fa fa-person"></i></span>
-                    </div>
+                <div class="col-sm-6">    
+                    <input class="form-control" name="txtName" id="txtName" placeholder="Enter Name" type="text" pnkvalidate="forceentry"
+                           displayfieldname="Name" data-pnk-input-value="0"/>
+                
                 </div>
             </div>
             <div class="form-group ">
                 <label for="txtNumber" class="col-sm-4 control-label"> Number :</label>
                 <div class="col-sm-6">
-                    <div class="input-group ">
-                        <input class="form-control" name="txtNumber" id="txtNumber" value=""
-                               placeholder="Enter Number" type="text" pnkvalidate="forcenumber"
-                               displayfieldname="Number" data-om-input-value="1"/>
-                        <span class="input-group-addon"><i class="fa fa-plus"></i></span>
-                    </div>
+                    <input class="form-control" name="txtNumber" id="txtNumber" value=""
+                       placeholder="Enter Number" type="text" pnkvalidate="forcenumber"
+                       displayfieldname="Number" data-pnk-input-value="1"/>
                 </div>
             </div>
             <div class="form-group ">
-                <label for="txtEmail" class="col-sm-4 control-label"> Number :</label>
+                <label for="txtEmail" class="col-sm-4 control-label"> Email :</label>
                 <div class="col-sm-6">
-                    <div class="input-group ">
-                        <input class="form-control" name="txtEmail" id="txtEmail" value=""
-                               placeholder="Enter Email" type="text" pnkvalidate="forceemail"
-                               displayfieldname="Email" data-om-input-value="2"/>
-                        <span class="input-group-addon"><i class="fa fa-plus"></i></span>
-                    </div>
+                   <input class="form-control" name="txtEmail" id="txtEmail" value=""
+                       placeholder="Enter Email" type="text" pnkvalidate="forceemail"
+                       displayfieldname="Email" data-pnk-input-value="2"/>
                 </div>
             </div>
             <div class="form-group ">
                 <label for="txtPassword" class="col-sm-4 control-label"> Password :</label>
-                <div class="col-sm-6">
-                    <div class="input-group ">
-                        <input class="form-control" name="txtPassword" id="txtPassword" value=""
-                               placeholder="Enter Password" type="text" pnkvalidate="forcepassword" pnk=""
-                               displayfieldname="Password" />
-                        <span class="input-group-addon"><i class="fa fa-plus"></i></span>
-                    </div>
+                <div class="col-sm-6">                   
+                    <input class="form-control" name="txtPassword" id="txtPassword" value=""
+                           placeholder="Enter Password" type="password" pnkvalidate="forcepassword" pnk=""
+                           displayfieldname="Password" />                   
                 </div>
             </div>
             <div class="form-group">
                 <label for="btnSubmit" class="col-sm-3 control-label"></label>
                 <div class="col-sm-5">
-                    <button type="button" class="btn btn-info" id="btnSubmit" name="btnSubmit" onclick="Addnew();" >Submit</button>
+                    <button type="button" class="btn btn-info" id="btnSubmit" name="btnSubmit" onclick="AddNew();" >Submit</button>
                 </div>
             </div>
         </div>
     </form>
+</div>
 </div>
 
 ``` 
@@ -247,13 +239,13 @@ $(document).ready(function () {
 function AddNew() {
         /* Validated is used to validate form contents like Email, number etc. */
         if(Validated("frmEntryEdit")) {
-            pnkHttp.Post(pnk.RootController + 'addnewuser').AddRequiredParams("frmEntryEdit").AttachLoader(true, "formID", 'small').Do().then(function (response) {
+            pnkHttp.Post(pnk.RootController + 'addnewuser').AddRequiredParams("frmEntryEdit").AttachLoader(false, "formID", 'small').Do().then(function (response) {
                 // handle response
                 pnk.Framework.AlertModal("INFO", "Successfully Added"); // framework's modal
             });
-        }else(
+        }else{
             // else code
-        )
+        }
     }
 ```
 3. Modify() method for modifiying data of user 
@@ -265,9 +257,9 @@ function Modify() {
                 // handle response
                 pnk.Framework.AlertModal("INFO", "Successfully Modified details"); // framework's modal
             });
-        }else(
+        }else{
             // else code
-        )
+        }
     }
 ```
 
